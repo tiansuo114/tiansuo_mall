@@ -1,0 +1,14 @@
+syntax = "v1"
+
+type ListCategoryReq struct {
+}
+
+type ListCategoryResp struct {
+    Categorys []Category `json:"categories"`
+}
+
+type Category struct {
+    ID           uint   `json:"id"`
+    CategoryName string `json:"category_name"`
+    CreatedAt    int64  `json:"created_at"`
+}

@@ -1,0 +1,225 @@
+syntax = "v1"
+
+import (
+    "address.api"
+    "base.api"
+    "carousel.api"
+    "cart.api"
+    "category.api"
+    "favorite.api"
+    "money.api"
+    "order.api"
+    "payment.api"
+    "product.api"
+    "product_img.api"
+    "skill_goods.api"
+    "user.api"
+)
+
+@server (
+    prefix: /v1
+    group:  test
+)
+service test {
+    @doc "ping"
+    @handler ping
+    post /api/ping  returns (PingResponse)
+}
+
+@server (
+    prefix: /v1
+    group:  user
+)
+service user {
+    @doc "用户注册"
+    @handler register
+    post /api/user/register (UserServiceReq) returns (BoolResp)
+
+    @doc "用户登录"
+    @handler UserLoginHandler
+    post /user/login (UserLoginReq) returns (BoolResp)
+}
+
+@server (
+    prefix:     /v1
+    group:      user
+    middleware: CheckRole
+    jwt:        Auth
+)
+service user{
+    @doc "更新用户信息"
+    @handler UserUpdateHandler
+    post /user/update (UserInfoUpdateReq) returns (BoolResp)
+
+    @doc "显示用户信息"
+    @handler ShowUserInfoHandler
+    get /user/show_info  returns (UserInfoResp)
+
+    @doc "发送邮件"
+    @handler SendEmailHandler
+    post /user/send_email (SendEmailServiceReq) returns (BoolResp)
+
+    @doc "验证邮件"
+    @handler ValidEmailHandler
+    get /user/valid_email(ValidEmailServiceReq) returns (BoolResp)
+
+    @doc "关注用户"
+    @handler UserFollowingHandler
+    post /user/following (UserFollowingReq) returns (BoolResp)
+
+    @doc "取消关注用户"
+    @handler UserUnFollowingHandler
+    post /user/unfollowing (UserUnFollowingReq) returns (BoolResp)
+
+    @doc "上传头像"
+    @handler UploadAvatarHandler
+    post /user/avatar  returns (BoolResp)
+
+    @doc "创建地址"
+    @handler CreateAddressHandler
+    post /addresses/create (AddressCreateReq) returns (AddressResp)
+
+    @doc "显示地址详情"
+    @handler ShowAddressHandler
+    get /addresses/show (AddressGetReq) returns (AddressResp)
+
+    @doc "获取地址列表"
+    @handler ListAddressHandler
+    get /addresses/list (AddressListReq) returns (AddressListResp)
+
+    @doc "更新地址"
+    @handler UpdateAddressHandler
+    post /addresses/update (AddressServiceReq) returns (BoolResp)
+
+    @doc "删除地址"
+    @handler DeleteAddressHandler
+    post /addresses/delete (AddressDeleteReq) returns (BoolResp)
+
+    @doc "显示金额"
+    @handler ShowMoneyHandler
+    post /money (MoneyShowReq) returns (MoneyShowResp)
+
+    @doc "订单支付"
+    @handler OrderPaymentHandler
+    post /paydown (PaymentDownReq) returns (BoolResp)
+}
+
+@server (
+    prefix: /v1
+    group:  product
+)
+service product {
+    @doc "获取商品列表"
+    @handler ListProductsHandler
+    get /product/list (ProductListReq) returns (ProductListResp)
+
+    @doc "显示商品详情"
+    @handler ShowProductHandler
+    get /product/show (ProductShowReq) returns (ProductResp)
+
+    @doc "搜索商品"
+    @handler SearchProductsHandler
+    post /product/search (ProductSearchReq) returns (ProductListResp)
+
+    @doc "获取商品图片列表"
+    @handler ListProductImgHandler
+    get /product/imgs/list (ListProductImgReq) returns (ProductImgResp)
+
+    @doc "获取商品分类列表"
+    @handler ListCategoryHandler
+    get /category/list  returns (ListCategoryResp)
+
+    @doc "获取轮播图列表"
+    @handler ListCarouselsHandler
+    get /carousels  returns (ListCarouselResp)
+}
+
+@server (
+    prefix:     /v1
+    group:      product
+    middleware: CheckRole
+    jwt:        Auth
+)
+service product {
+    @doc "创建商品"
+    @handler CreateProductHandler
+    post /product/create (ProductCreateReq) returns (ProductResp)
+
+    @doc "更新商品"
+    @handler UpdateProductHandler
+    post /product/update (ProductUpdateReq) returns (ProductResp)
+
+    @doc "删除商品"
+    @handler DeleteProductHandler
+    post /product/delete (ProductDeleteReq) returns (BoolResp)
+}
+
+@server (
+    prefix:     /v1
+    group:      favorites
+    middleware: CheckRole
+    jwt:        Auth
+)
+service favorites {
+    @doc "获取收藏夹列表"
+    @handler ListFavoritesHandler
+    get /favorites/list  returns (FavoriteListResp)
+
+    @doc "创建收藏"
+    @handler CreateFavoriteHandler
+    post /favorites/create (FavoriteCreateReq) returns (BoolResp)
+
+    @doc "删除收藏"
+    @handler DeleteFavoriteHandler
+    post /favorites/delete (FavoriteDeleteReq) returns (BoolResp)
+}
+
+@server (
+    prefix:     /v1
+    group:      order
+    middleware: CheckRole
+    jwt:        Auth
+)
+service order {
+    @doc "创建订单"
+    @handler CreateOrderHandler
+    post /orders/create (OrderCreateReq) returns (BoolResp)
+
+    @doc "获取订单列表"
+    @handler ListOrdersHandler
+    get /orders/list  returns (OrderListResp)
+
+    @doc "显示订单详情"
+    @handler ShowOrderHandler
+    get /orders/show (OrderShowReq) returns (Order)
+
+    @doc "删除订单"
+    @handler DeleteOrderHandler
+    post /orders/delete (OrderDeleteReq) returns (BoolResp)
+}
+
+@server (
+    prefix:     /v1
+    group:      cart
+    middleware: CheckRole
+    jwt:        Auth
+)
+service cart {
+    @doc "创建购物车条目"
+    @handler CreateCartHandler
+    post /carts/create (CartCreateReq) returns (CartResp)
+
+    @doc "获取购物车列表"
+    @handler ListCartHandler
+    get /carts/list  returns (CartListResp)
+
+    @doc "更新购物车条目"
+    @handler UpdateCartHandler
+    post /carts/update (UpdateCartServiceReq) returns (BoolResp)
+
+    @doc "删除购物车条目"
+    @handler DeleteCartHandler
+    post /carts/delete (CartDeleteReq) returns (BoolResp)
+}
+
+

@@ -1,0 +1,2632 @@
+{
+  "info": {
+    "title": "cgin_mail",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [{
+    "name": "用户操作"
+  }, {
+    "name": "商品操作"
+  }, {
+    "name": "收藏夹操作"
+  }, {
+    "name": "地址操作"
+  }, {
+    "name": "购物车操作"
+  }, {
+    "name": "订单操作"
+  }, {
+    "name": "轮播图"
+  }, {
+    "name": "秒杀专场"
+  }],
+  "paths": {
+    "/ping": {
+      "get": {
+        "summary": "测试连接",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/register": {
+      "post": {
+        "summary": "用户注册",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "nick_name",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "user_name",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "password",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "key",
+          "in": "formData",
+          "required": true,
+          "type": "string",
+          "description": "密钥，支付密码,6位"
+        }],
+        "responses": {
+          "200": {
+            "description": "用户注册",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/product/show": {
+      "get": {
+        "summary": "展示商品详细信息",
+        "deprecated": false,
+        "description": "",
+        "tags": ["商品操作"],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "1"
+        }, {
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "展示商品详细信息",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "category_id": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "info": {
+                      "type": "string"
+                    },
+                    "img_path": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "discount_price": {
+                      "type": "string"
+                    },
+                    "view": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "integer"
+                    },
+                    "num": {
+                      "type": "integer"
+                    },
+                    "on_sale": {
+                      "type": "boolean"
+                    },
+                    "boss_id": {
+                      "type": "integer"
+                    },
+                    "boss_name": {
+                      "type": "string"
+                    },
+                    "boss_avatar": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["id", "name", "category_id", "title", "info", "img_path", "price", "discount_price", "view", "created_at", "num", "on_sale", "boss_id", "boss_name", "boss_avatar"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/favorites/create": {
+      "post": {
+        "summary": "创建收藏夹",
+        "deprecated": false,
+        "description": "",
+        "tags": ["收藏夹操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "product_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "boss_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "创建收藏夹",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/addresses/create": {
+      "post": {
+        "summary": "创建地址",
+        "deprecated": false,
+        "description": "",
+        "tags": ["地址操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "name",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "address",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "phone",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "创建地址",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/carts/list": {
+      "get": {
+        "summary": "获取购物车列表",
+        "deprecated": false,
+        "description": "",
+        "tags": ["购物车操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取购物车列表",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "product_id": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "integer"
+                          },
+                          "num": {
+                            "type": "integer"
+                          },
+                          "max_num": {
+                            "type": "integer"
+                          },
+                          "check": {
+                            "type": "boolean"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "img_path": {
+                            "type": "string"
+                          },
+                          "discount_price": {
+                            "type": "string"
+                          },
+                          "boss_id": {
+                            "type": "integer"
+                          },
+                          "boss_name": {
+                            "type": "string"
+                          },
+                          "info": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/orders/create": {
+      "post": {
+        "summary": "创建订单",
+        "deprecated": false,
+        "description": "",
+        "tags": ["订单操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "product_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "num",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "address_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "money",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "boss_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "type",
+          "in": "formData",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "创建订单",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/carousels": {
+      "get": {
+        "summary": "获取轮播图",
+        "deprecated": false,
+        "description": "",
+        "tags": ["轮播图"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取轮播图",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/import_skill_goods": {
+      "post": {
+        "summary": "初始化秒杀商品",
+        "deprecated": false,
+        "description": "",
+        "tags": ["秒杀专场"],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{token}}"
+        }, {
+          "name": "file",
+          "in": "formData",
+          "required": true,
+          "format": "binary",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "user_name",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "password",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "用户登录",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "user_name": {
+                          "type": "string"
+                        },
+                        "nickname": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "integer"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "avatar": {
+                          "type": "string"
+                        },
+                        "create_at": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": ["id", "user_name", "nickname", "type", "email", "status", "avatar", "create_at"]
+                    },
+                    "access_token": {
+                      "type": "string"
+                    },
+                    "refresh_token": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["user", "access_token", "refresh_token"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/product/search": {
+      "post": {
+        "summary": "搜索商品",
+        "deprecated": false,
+        "description": "",
+        "tags": ["商品操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{token}}"
+        }, {
+          "name": "info",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "搜索商品",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "category_id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "info": {
+                            "type": "string"
+                          },
+                          "img_path": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "string"
+                          },
+                          "discount_price": {
+                            "type": "string"
+                          },
+                          "view": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "integer"
+                          },
+                          "num": {
+                            "type": "integer"
+                          },
+                          "on_sale": {
+                            "type": "boolean"
+                          },
+                          "boss_id": {
+                            "type": "integer"
+                          },
+                          "boss_name": {
+                            "type": "string"
+                          },
+                          "boss_avatar": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/favorites/list": {
+      "get": {
+        "summary": "展示收藏夹",
+        "deprecated": false,
+        "description": "",
+        "tags": ["收藏夹操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "展示收藏夹",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "product_id": {
+                            "type": "integer"
+                          },
+                          "create_at": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "category_id": {
+                            "type": "integer"
+                          },
+                          "category_name": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "info": {
+                            "type": "string"
+                          },
+                          "img_path": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "string"
+                          },
+                          "discount_price": {
+                            "type": "string"
+                          },
+                          "boss_id": {
+                            "type": "integer"
+                          },
+                          "boss_name": {
+                            "type": "string"
+                          },
+                          "boss_avatar": {
+                            "type": "string"
+                          },
+                          "num": {
+                            "type": "integer"
+                          },
+                          "on_sale": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/addresses/show": {
+      "get": {
+        "summary": "获取地址",
+        "deprecated": false,
+        "description": "",
+        "tags": ["地址操作"],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "1"
+        }, {
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取地址",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "user_id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["id", "user_id", "name", "phone", "address", "created_at"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/carts/create": {
+      "post": {
+        "summary": "创建购物车",
+        "deprecated": false,
+        "description": "",
+        "tags": ["购物车操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "boss_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "product_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "num",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "创建购物车",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/orders/list": {
+      "get": {
+        "summary": "获取订单列表",
+        "deprecated": false,
+        "description": "",
+        "tags": ["订单操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "type",
+          "in": "formData",
+          "required": true,
+          "type": "string",
+          "description": "1，待付款。2，待发货。3，待收货"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取订单列表",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "order_num": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "integer"
+                          },
+                          "updated_at": {
+                            "type": "integer"
+                          },
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "product_id": {
+                            "type": "integer"
+                          },
+                          "boss_id": {
+                            "type": "integer"
+                          },
+                          "num": {
+                            "type": "integer"
+                          },
+                          "address_name": {
+                            "type": "string"
+                          },
+                          "address_phone": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "img_path": {
+                            "type": "string"
+                          },
+                          "discount_price": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/init_skill_goods": {
+      "post": {
+        "summary": "同步redis",
+        "deprecated": false,
+        "description": "",
+        "tags": ["秒杀专场"],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/update": {
+      "post": {
+        "summary": "用户信息修改",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "nick_name",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "用户信息修改",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/product/create": {
+      "post": {
+        "summary": "创建商品",
+        "deprecated": false,
+        "description": "",
+        "tags": ["商品操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "name",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "category_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "title",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "info",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "price",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "discount_price",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "image",
+          "in": "formData",
+          "required": true,
+          "format": "binary",
+          "type": "string"
+        }, {
+          "name": "num",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "创建商品",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/favorites/delete": {
+      "post": {
+        "summary": "删除收藏夹",
+        "deprecated": false,
+        "description": "",
+        "tags": ["收藏夹操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "删除收藏夹",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/addresses/update": {
+      "post": {
+        "summary": "修改地址",
+        "deprecated": false,
+        "description": "",
+        "tags": ["地址操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "name",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "phone",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "address",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "修改地址",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "user_id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          },
+                          "address": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/carts/update": {
+      "post": {
+        "summary": "修改购物车信息",
+        "deprecated": false,
+        "description": "",
+        "tags": ["购物车操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "num",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "修改购物车信息",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/orders/show": {
+      "get": {
+        "summary": "获取订单详细信息",
+        "deprecated": false,
+        "description": "",
+        "tags": ["订单操作"],
+        "parameters": [{
+          "name": "order_id",
+          "in": "query",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "1"
+        }, {
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取订单详细信息",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "order_num": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "integer"
+                    },
+                    "updated_at": {
+                      "type": "integer"
+                    },
+                    "user_id": {
+                      "type": "integer"
+                    },
+                    "product_id": {
+                      "type": "integer"
+                    },
+                    "boss_id": {
+                      "type": "integer"
+                    },
+                    "num": {
+                      "type": "integer"
+                    },
+                    "address_name": {
+                      "type": "string"
+                    },
+                    "address_phone": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "img_path": {
+                      "type": "string"
+                    },
+                    "discount_price": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["id", "order_num", "created_at", "updated_at", "user_id", "product_id", "boss_id", "num", "address_name", "address_phone", "address", "type", "name", "img_path", "discount_price"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/skill_goods": {
+      "post": {
+        "summary": "秒杀专场",
+        "deprecated": false,
+        "description": "",
+        "tags": ["秒杀专场"],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{token}}"
+        }, {
+          "name": "skill_goods_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "product_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "boss_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "address_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "key",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/send_email": {
+      "post": {
+        "summary": "绑定邮箱",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "email",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "password",
+          "in": "formData",
+          "type": "string"
+        }, {
+          "name": "operation_type",
+          "in": "formData",
+          "required": true,
+          "type": "string",
+          "description": "1绑定邮箱。2解绑邮箱。3修改密码"
+        }],
+        "responses": {
+          "200": {
+            "description": "绑定邮箱",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "null"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/product/imgs/list": {
+      "get": {
+        "summary": "获取图片地址",
+        "deprecated": false,
+        "description": "",
+        "tags": ["商品操作"],
+        "parameters": [{
+          "name": "id",
+          "in": "query",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "1"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取图片地址",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "product_id": {
+                            "type": "integer"
+                          },
+                          "img_path": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["product_id", "img_path"]
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/addresses/delete": {
+      "post": {
+        "summary": "删除地址",
+        "deprecated": false,
+        "description": "",
+        "tags": ["地址操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "删除地址",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/carts/delete": {
+      "post": {
+        "summary": "删除购物车",
+        "deprecated": false,
+        "description": "",
+        "tags": ["购物车操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "删除购物车",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/orders_delete": {
+      "post": {
+        "summary": "删除订单",
+        "deprecated": false,
+        "description": "",
+        "tags": ["订单操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{token}}"
+        }, {
+          "name": "order_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "删除订单",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/avatar": {
+      "post": {
+        "summary": "更换头像",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "file",
+          "in": "formData",
+          "required": true,
+          "format": "binary",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "更换头像",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/category/list": {
+      "get": {
+        "summary": "获取商品分类",
+        "deprecated": false,
+        "description": "",
+        "tags": ["商品操作"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "获取商品分类",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "category_name": {
+                            "type": "string"
+                          },
+                          "created_at": {
+                            "type": "integer"
+                          }
+                        },
+                        "required": ["id", "category_name", "created_at"]
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/addresses/list": {
+      "get": {
+        "summary": "获取地址列表",
+        "deprecated": false,
+        "description": "",
+        "tags": ["地址操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取地址列表",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "user_id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "address": {
+                        "type": "string"
+                      },
+                      "created_at": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/paydown": {
+      "post": {
+        "summary": "订单支付",
+        "deprecated": false,
+        "description": "",
+        "tags": ["订单操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "key",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "num",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "money",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "orderNo",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "product_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "boss_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "order_id",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "订单支付",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/money": {
+      "post": {
+        "summary": "获取用户金钱",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }, {
+          "name": "key",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取用户金钱",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "user_id": {
+                      "type": "integer"
+                    },
+                    "user_name": {
+                      "type": "string"
+                    },
+                    "user_money": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["user_id", "user_name", "user_money"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/product/list": {
+      "get": {
+        "summary": "获取商品列表",
+        "deprecated": false,
+        "description": "",
+        "tags": ["商品操作"],
+        "parameters": [{
+          "name": "page_size",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }, {
+          "name": "page_num",
+          "in": "formData",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "获取商品列表",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "category_id": {
+                            "type": "integer"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "info": {
+                            "type": "string"
+                          },
+                          "img_path": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "string"
+                          },
+                          "discount_price": {
+                            "type": "string"
+                          },
+                          "view": {
+                            "type": "integer"
+                          },
+                          "created_at": {
+                            "type": "integer"
+                          },
+                          "num": {
+                            "type": "integer"
+                          },
+                          "on_sale": {
+                            "type": "boolean"
+                          },
+                          "boss_id": {
+                            "type": "integer"
+                          },
+                          "boss_name": {
+                            "type": "string"
+                          },
+                          "boss_avatar": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["item", "total"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "consumes": ["multipart/form-data"],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/valid_email": {
+      "get": {
+        "summary": "验证邮箱",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "token",
+          "in": "query",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": ""
+        }, {
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "验证邮箱",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "user_name": {
+                      "type": "string"
+                    },
+                    "nickname": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    },
+                    "create_at": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["id", "user_name", "nickname", "type", "email", "status", "avatar", "create_at"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    },
+    "/user/show_info": {
+      "get": {
+        "summary": "用户信息获取",
+        "deprecated": false,
+        "description": "",
+        "tags": ["用户操作"],
+        "parameters": [{
+          "name": "access_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{access_token}}"
+        }, {
+          "name": "refresh_token",
+          "in": "header",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "x-example": "{{refresh_token}}"
+        }],
+        "responses": {
+          "200": {
+            "description": "用户信息获取",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "integer"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "user_name": {
+                      "type": "string"
+                    },
+                    "nickname": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "integer"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string"
+                    },
+                    "create_at": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["id", "user_name", "nickname", "type", "email", "status", "avatar", "create_at"]
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "error": {
+                  "type": "string"
+                },
+                "track_id": {
+                  "type": "string"
+                }
+              },
+              "required": ["status", "data", "msg", "error", "track_id"]
+            }
+          }
+        },
+        "security": [],
+        "produces": ["application/json"]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {},
+  "securityDefinitions": {},
+  "x-components": {}
+}
